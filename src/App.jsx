@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import EightBall from './EightBall';
+import ColorBoxes from './ColorBoxes';
 
 
 /** Component for entire page.
@@ -12,7 +13,8 @@ import EightBall from './EightBall';
 
 function App() {
 
-  return <EightBall/>
+  // return <EightBall/>
+  return <ColorBoxes/>
 }
 
 export default App;

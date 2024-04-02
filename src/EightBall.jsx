@@ -25,6 +25,17 @@ const DEFAULT_ANSWERS = [
   { msg: "Very doubtful.", color: "red" },
 ];
 
+const INITAL_ANSWER = {
+  color: "black",
+  msg: "Think of a Question"
+}
+
+const INITIAL_COUNTS = {
+  red: 0,
+  green: 0,
+  goldenrod: 0
+}
+
 
 /** Creates a magic eight ball
  *
@@ -38,10 +49,11 @@ const DEFAULT_ANSWERS = [
  * App -> EightBall
  */
 function EightBall({ answers = DEFAULT_ANSWERS }) {
-  const [answer, setAnswer] = useState({
-    color: "black",
-    msg: "Think of a Question"
-  });
+  const [answer, setAnswer] = useState(INITAL_ANSWER);
+  // const [redCount, setRedCount] = useState(0);
+  // const [greenCount, setGreenCount] = useState(0);
+  // const [goldenRodCount, setGoldenRodCount] = useState(0);
+  const [colorCounts, setColorCounts] = useState(INITIAL_COUNTS)
 
   const style = {
     backgroundColor: answer.color,
@@ -54,12 +66,29 @@ function EightBall({ answers = DEFAULT_ANSWERS }) {
       color: newAnswer.color,
       msg: newAnswer.msg
     });
+
+    setColorCounts(function (colorCounts) {
+      const newColorCounts = {...colorCounts};
+      newColorCounts[newAnswer.color] = colorCounts[newAnswer.color] + 1
+       return newColorCounts;
+    });
+  }
+
+  function resetEightBall() {
+    setAnswer(INITAL_ANSWER);
+    setColorCounts(INITIAL_COUNTS);
   }
 
 
   return (
-    <div style={style} onClick={handleClick} className='EightBall'>
-      {answer.msg}
+    <div>
+      <p>Red count: {colorCounts.red}</p>
+      <p>Green count: {colorCounts.green}</p>
+      <p>Goldenrod count: {colorCounts.goldenrod}</p>
+      <div style={style} onClick={handleClick} className='EightBall'>
+        {answer.msg}
+      </div>
+      <button onClick={resetEightBall}>Reset</button>
     </div>
   );
 
